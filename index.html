@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Quantix – Earn Daily</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0a0f1e;
+  --bg2: #0f1629;
+  --bg3: #141c35;
+  --card: #111827;
+  --border: #1e2a45;
+  --accent: #00e5ff;
+  --accent2: #7c3aed;
+  --accent3: #10b981;
+  --warn: #f59e0b;
+  --danger: #ef4444;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --gold: #fbbf24;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4,.brand{font-family:'Syne',sans-serif}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* ── Utility ── */
+.hidden{display:none!important}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;transition:all .2s;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#0084ff);color:#000}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,229,255,.3)}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-green{background:linear-gradient(135deg,var(--accent3),#059669);color:#fff}
+.btn-green:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(16,185,129,.3)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-sm{padding:7px 14px;font-size:.8rem}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
+.badge-green{background:rgba(16,185,129,.15);color:var(--accent3)}
+.badge-yellow{background:rgba(251,191,36,.15);color:var(--gold)}
+.badge-red{background:rgba(239,68,68,.15);color:var(--danger)}
+.badge-blue{background:rgba(0,229,255,.1);color:var(--accent)}
+.badge-purple{background:rgba(124,58,237,.2);color:#a78bfa}
+.input{width:100%;padding:12px 16px;background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;transition:border .2s;outline:none}
+.input:focus{border-color:var(--accent)}
+.input::placeholder{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px}
+.toast{position:fixed;top:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+.toast-item{padding:14px 20px;border-radius:12px;font-weight:500;animation:slideIn .3s ease;min-width:260px;font-size:.9rem}
+.toast-success{background:#064e3b;border:1px solid var(--accent3);color:#6ee7b7}
+.toast-error{background:#450a0a;border:1px solid var(--danger);color:#fca5a5}
+.toast-info{background:#0c1a3a;border:1px solid var(--accent);color:var(--accent)}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* ── Glow BG ── */
+.glow-orb{position:fixed;border-radius:50%;filter:blur(120px);opacity:.12;pointer-events:none;z-index:0}
+.orb1{width:500px;height:500px;background:var(--accent);top:-150px;left:-150px}
+.orb2{width:400px;height:400px;background:var(--accent2);bottom:-100px;right:-100px}
+.orb3{width:300px;height:300px;background:var(--accent3);top:40%;left:50%;transform:translateX(-50%)}
+
+/* ════════════════════ LANDING ════════════════════ */
+#page-landing{position:relative;min-height:100vh;display:flex;flex-direction:column}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 40px;position:relative;z-index:10}
+.brand{font-size:1.6rem;font-weight:800;background:linear-gradient(90deg,var(--accent),#0084ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px}
+.brand span{font-weight:300;-webkit-text-fill-color:rgba(255,255,255,.5)}
+.nav-links{display:flex;gap:12px;align-items:center}
+.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 20px;position:relative;z-index:5}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--accent);padding:6px 16px;border-radius:30px;font-size:.8rem;font-weight:600;margin-bottom:24px;letter-spacing:.5px}
+.hero h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;line-height:1.1;max-width:720px;margin-bottom:20px;letter-spacing:-2px}
+.hero h1 .highlight{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.1rem;color:var(--muted);max-width:520px;line-height:1.7;margin-bottom:36px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:60px}
+.stats-row{display:flex;gap:40px;justify-content:center;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;background:linear-gradient(90deg,var(--accent),#0084ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:.8rem;color:var(--muted);margin-top:2px}
+/* Features */
+.features{padding:80px 40px;position:relative;z-index:5;max-width:1100px;margin:0 auto}
+.section-title{text-align:center;margin-bottom:48px}
+.section-title h2{font-size:2rem;font-weight:800;letter-spacing:-1px;margin-bottom:10px}
+.section-title p{color:var(--muted);font-size:1rem}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.feature-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .3s;position:relative;overflow:hidden}
+.feature-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,229,255,.04),transparent);opacity:0;transition:.3s}
+.feature-card:hover{border-color:rgba(0,229,255,.3);transform:translateY(-4px)}
+.feature-card:hover::before{opacity:1}
+.feat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:16px}
+.feat-icon.cyan{background:rgba(0,229,255,.1)}
+.feat-icon.purple{background:rgba(124,58,237,.15)}
+.feat-icon.green{background:rgba(16,185,129,.1)}
+.feat-icon.gold{background:rgba(251,191,36,.1)}
+.feature-card h3{font-size:1rem;font-weight:700;margin-bottom:8px}
+.feature-card p{font-size:.85rem;color:var(--muted);line-height:1.6}
+/* How it works */
+.how{padding:60px 40px;position:relative;z-index:5;max-width:900px;margin:0 auto}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:20px;align-items:flex-start;padding:24px 0;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none}
+.step-num{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#0084ff);color:#000;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-info h4{font-size:1rem;font-weight:700;margin-bottom:4px}
+.step-info p{font-size:.85rem;color:var(--muted);line-height:1.6}
+/* Footer */
+.footer{text-align:center;padding:30px;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border);position:relative;z-index:5}
+
+/* ════════════════════ AUTH PAGES ════════════════════ */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;position:relative;z-index:5}
+.auth-box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:40px;width:100%;max-width:440px}
+.auth-box .brand{display:block;text-align:center;font-size:1.8rem;margin-bottom:8px}
+.auth-title{font-size:1.4rem;font-weight:700;text-align:center;margin-bottom:4px}
+.auth-sub{text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:28px}
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:6px;letter-spacing:.3px;text-transform:uppercase}
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--muted);font-size:.8rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.google-btn{width:100%;padding:12px;background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s;font-size:.9rem}
+.google-btn:hover{border-color:var(--accent)}
+.auth-switch{text-align:center;margin-top:20px;font-size:.85rem;color:var(--muted)}
+.auth-switch a{color:var(--accent);text-decoration:none;font-weight:600}
+.ref-badge{background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:10px;padding:10px 14px;font-size:.82rem;color:var(--accent);margin-bottom:16px;text-align:center}
+
+/* ════════════════════ ACTIVATION ════════════════════ */
+.activation-box{max-width:500px}
+.price-tag{font-size:3rem;font-weight:800;text-align:center;background:linear-gradient(90deg,var(--accent),#0084ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:20px 0 6px}
+.price-sub{text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:28px}
+.benefit-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.benefit-list li{display:flex;align-items:center;gap:10px;font-size:.9rem}
+.benefit-list li::before{content:'✓';color:var(--accent3);font-weight:800;flex-shrink:0}
+.status-checking{text-align:center;padding:20px;color:var(--muted)}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ════════════════════ DASHBOARD ════════════════════ */
+.dash-layout{display:flex;min-height:100vh}
+/* Sidebar */
+.sidebar{width:240px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:24px 0;position:fixed;left:0;top:0;bottom:0;z-index:100;transition:.3s}
+.sidebar .brand{padding:0 24px 24px;font-size:1.4rem}
+.sidebar-nav{flex:1;display:flex;flex-direction:column;gap:2px;padding:0 12px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:.9rem;font-weight:500;transition:.2s;text-decoration:none;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item.active{background:rgba(0,229,255,.1);color:var(--accent);border:1px solid rgba(0,229,255,.2)}
+.nav-item .nav-icon{font-size:1.1rem;width:22px;text-align:center}
+.sidebar-footer{padding:16px 24px;border-top:1px solid var(--border)}
+.user-mini{display:flex;align-items:center;gap:10px}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;color:#000;flex-shrink:0}
+.avatar-lg{width:60px;height:60px;font-size:1.3rem}
+.user-mini-info{flex:1;min-width:0}
+.user-mini-name{font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-mini-email{font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Main */
+.dash-main{margin-left:240px;flex:1;padding:32px;min-height:100vh}
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+.page-title{font-size:1.6rem;font-weight:800;letter-spacing:-1px}
+.page-subtitle{color:var(--muted);font-size:.85rem;margin-top:2px}
+/* Stats cards */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;position:relative;overflow:hidden}
+.stat-card::after{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;opacity:.1}
+.stat-card.cyan::after{background:var(--accent)}
+.stat-card.purple::after{background:var(--accent2)}
+.stat-card.green::after{background:var(--accent3)}
+.stat-card.gold::after{background:var(--gold)}
+.stat-card-label{font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+.stat-card-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800}
+.stat-card-sub{font-size:.75rem;color:var(--muted);margin-top:4px}
+.stat-card.cyan .stat-card-val{color:var(--accent)}
+.stat-card.purple .stat-card-val{color:#a78bfa}
+.stat-card.green .stat-card-val{color:var(--accent3)}
+.stat-card.gold .stat-card-val{color:var(--gold)}
+/* Tasks */
+.tasks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.task-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+.task-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0}
+.task-card.chat::before{background:linear-gradient(90deg,var(--accent),#0084ff)}
+.task-card.survey::before{background:linear-gradient(90deg,var(--accent2),#ec4899)}
+.task-card.trivia::before{background:linear-gradient(90deg,var(--gold),#f97316)}
+.task-card.video::before{background:linear-gradient(90deg,var(--accent3),#06b6d4)}
+.task-card.review::before{background:linear-gradient(90deg,#f43f5e,var(--accent2))}
+.task-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.2)}
+.task-card.done{opacity:.5;cursor:not-allowed}
+.task-card.done::after{content:'✓ Completed';position:absolute;top:12px;right:12px;background:rgba(16,185,129,.15);color:var(--accent3);padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700}
+.task-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.task-icon{font-size:2rem}
+.task-earn{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--gold)}
+.task-earn small{font-size:.7rem;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400}
+.task-title{font-size:1rem;font-weight:700;margin-bottom:6px}
+.task-desc{font-size:.82rem;color:var(--muted);line-height:1.5;margin-bottom:16px}
+.task-footer{display:flex;align-items:center;justify-content:space-between}
+.progress-wrap{background:var(--bg3);border-radius:20px;height:4px;flex:1;margin-right:12px;overflow:hidden}
+.progress-bar{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--accent),#0084ff);transition:width .5s}
+/* Withdraw */
+.withdraw-card{max-width:500px}
+.bal-display{text-align:center;padding:24px;background:var(--bg3);border-radius:14px;margin-bottom:24px}
+.bal-label{font-size:.8rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.bal-amount{font-family:'Syne',sans-serif;font-size:2.6rem;font-weight:800;color:var(--gold)}
+.withdraw-info{background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.15);border-radius:10px;padding:14px;font-size:.83rem;line-height:1.7;color:var(--muted);margin-bottom:20px}
+.withdraw-info strong{color:var(--accent)}
+/* Referral */
+.ref-link-box{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:10px;font-size:.85rem;word-break:break-all}
+.ref-link-box .link{flex:1;color:var(--accent)}
+.copy-btn{flex-shrink:0;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.2);color:var(--accent);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:.78rem;font-weight:700;transition:.2s}
+.copy-btn:hover{background:rgba(0,229,255,.2)}
+.ref-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.ref-table th{text-align:left;padding:10px 14px;color:var(--muted);font-size:.75rem;font-weight:600;letter-spacing:.3px;border-bottom:1px solid var(--border)}
+.ref-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04)}
+.ref-table tr:hover td{background:rgba(255,255,255,.02)}
+/* Profile */
+.profile-header{display:flex;align-items:center;gap:20px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+/* Notifications */
+.notif-item{display:flex;gap:14px;padding:14px;border-bottom:1px solid rgba(255,255,255,.04)}
+.notif-item:last-child{border-bottom:none}
+.notif-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:6px;flex-shrink:0}
+.notif-dot.read{background:var(--muted)}
+.notif-text{font-size:.85rem;line-height:1.5}
+.notif-time{font-size:.72rem;color:var(--muted);margin-top:3px}
+
+/* ════════════════════ ADMIN ════════════════════ */
+.admin-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.admin-table th{text-align:left;padding:12px 16px;background:var(--bg3);color:var(--muted);font-size:.75rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.admin-table td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.04)}
+.admin-table tr:hover td{background:rgba(255,255,255,.02)}
+.admin-stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+.admin-stat-val{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--accent)}
+.admin-stat-label{font-size:.8rem;color:var(--muted);margin-top:4px}
+.search-bar{display:flex;gap:12px;margin-bottom:20px}
+.search-bar .input{max-width:320px}
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9000;padding:20px;backdrop-filter:blur(6px)}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;width:100%;max-width:460px;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--bg3);border:none;color:var(--muted);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{color:var(--text)}
+.modal-title{font-size:1.2rem;font-weight:700;margin-bottom:20px}
+/* Task Modal */
+.task-modal-content{min-height:200px}
+.chat-area{border:1px solid var(--border);border-radius:12px;height:200px;overflow-y:auto;padding:14px;margin-bottom:12px;background:var(--bg3);display:flex;flex-direction:column;gap:8px}
+.msg{padding:8px 12px;border-radius:10px;font-size:.85rem;max-width:80%;line-height:1.4}
+.msg.bot{background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.15);color:var(--accent);align-self:flex-start}
+.msg.user{background:rgba(124,58,237,.15);color:#c4b5fd;align-self:flex-end;text-align:right}
+.survey-q{margin-bottom:16px}
+.survey-q p{font-size:.9rem;margin-bottom:10px;font-weight:500}
+.survey-opt{padding:10px 14px;background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;font-size:.85rem;margin-bottom:6px;transition:.2s}
+.survey-opt:hover{border-color:var(--accent);color:var(--accent)}
+.survey-opt.selected{border-color:var(--accent3);background:rgba(16,185,129,.1);color:var(--accent3)}
+.trivia-opt{padding:12px 16px;background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;font-size:.85rem;margin-bottom:8px;transition:.2s;font-weight:500}
+.trivia-opt:hover{border-color:var(--gold);color:var(--gold)}
+.trivia-opt.correct{border-color:var(--accent3);background:rgba(16,185,129,.1);color:var(--accent3)}
+.trivia-opt.wrong{border-color:var(--danger);background:rgba(239,68,68,.1);color:var(--danger)}
+/* Mobile sidebar toggle */
+.mob-toggle{display:none;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;cursor:pointer;font-size:1.2rem}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .dash-main{margin-left:0;padding:20px}
+  .mob-toggle{display:flex}
+  .nav{padding:16px 20px}
+  .hero h1{font-size:2rem}
+  .features,.how{padding:40px 20px}
+  .stats-row{gap:24px}
+  .tasks-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+}
+.overlay-mask{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;display:none}
+.overlay-mask.visible{display:block}
+
+/* Earnings animation */
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.earning-pop{animation:pop .4s ease}
+
+/* Task countdown */
+.countdown-wrap{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)}
+.countdown-dot{width:6px;height:6px;border-radius:50%;background:var(--accent3);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+<div class="glow-orb orb1"></div>
+<div class="glow-orb orb2"></div>
+<div class="glow-orb orb3"></div>
+
+<!-- Toast Container -->
+<div class="toast" id="toastContainer"></div>
+
+<!-- ══════════ PAGE: LANDING ══════════ -->
+<div id="page-landing">
+  <nav class="nav">
+    <div class="brand">Quantix<span>.ke</span></div>
+    <div class="nav-links">
+      <button class="btn btn-outline btn-sm" onclick="showPage('login')">Sign In</button>
+      <button class="btn btn-primary btn-sm" onclick="showPage('register')">Get Started →</button>
+    </div>
+  </nav>
+  <div class="hero">
+    <div class="hero-tag">🚀 Join 1,200+ earning members</div>
+    <h1>Earn Real Money Doing<br/><span class="highlight">Simple Daily Tasks</span></h1>
+    <p>Complete tasks, answer surveys, chat and earn Ksh 100+ every day. Withdraw directly to M-Pesa. Simple, fast, and 100% real.</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary" onclick="showPage('register')">Start Earning Today →</button>
+      <button class="btn btn-outline" onclick="document.querySelector('.features').scrollIntoView({behavior:'smooth'})">Learn More</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-val">Ksh 20</div><div class="stat-label">Per Task</div></div>
+      <div class="stat"><div class="stat-val">5</div><div class="stat-label">Tasks Daily</div></div>
+      <div class="stat"><div class="stat-val">Ksh 100+</div><div class="stat-label">Daily Max</div></div>
+      <div class="stat"><div class="stat-val">M-Pesa</div><div class="stat-label">Withdrawals</div></div>
+    </div>
+  </div>
+  <div class="features">
+    <div class="section-title">
+      <h2>Everything You Need to Earn</h2>
+      <p>Real tasks. Real money. Sent straight to your phone.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feat-icon cyan">💬</div>
+        <h3>Real Chat Tasks</h3>
+        <p>Engage in real conversations and community chats. Each session earns you Ksh 20.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon purple">📊</div>
+        <h3>Paid Surveys</h3>
+        <p>Share your opinion on real products and services. Businesses pay for your feedback.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon gold">🧠</div>
+        <h3>Trivia Quizzes</h3>
+        <p>Answer fun questions across different topics. Get paid whether you're right or wrong!</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon green">👥</div>
+        <h3>Referral Bonuses</h3>
+        <p>Refer friends and earn Ksh 50 for every person who activates their account.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon cyan">📱</div>
+        <h3>M-Pesa Withdrawals</h3>
+        <p>Withdraw directly to your phone via M-Pesa. Minimum withdrawal is Ksh 1,000.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon purple">🔒</div>
+        <h3>Secure & Verified</h3>
+        <p>Payments powered by PayHero. Your earnings are safe and always tracked accurately.</p>
+      </div>
+    </div>
+  </div>
+  <div class="how">
+    <div class="section-title">
+      <h2>How It Works</h2>
+      <p>Get started in minutes and begin earning today</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-info">
+          <h4>Create Your Account</h4>
+          <p>Sign up with Google or create a username/password account. It takes under 2 minutes.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-info">
+          <h4>Activate for Ksh 225</h4>
+          <p>Pay a one-time activation fee via M-Pesa STK Push. Your account unlocks immediately after payment is confirmed.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-info">
+          <h4>Complete Daily Tasks</h4>
+          <p>Every day you get 5 fresh tasks worth Ksh 20 each. Chat, survey, trivia, and more. That's Ksh 100 per day!</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-info">
+          <h4>Withdraw to M-Pesa</h4>
+          <p>Once you hit Ksh 1,000, request withdrawal and we'll send it straight to your M-Pesa within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <div style="margin-bottom:8px"><span class="brand" style="font-size:1.2rem">Quantix<span>.ke</span></span></div>
+    © 2025 Quantix. Empowering Kenyan Youth. | <a href="#" style="color:var(--muted)">Terms</a> · <a href="#" style="color:var(--muted)">Privacy</a>
+  </footer>
+</div>
+
+<!-- ══════════ PAGE: REGISTER ══════════ -->
+<div id="page-register" class="hidden">
+  <div class="auth-wrap">
+    <div class="auth-box">
+      <span class="brand">Quantix</span>
+      <div class="auth-title">Create Account</div>
+      <div class="auth-sub">Join thousands earning daily on Quantix</div>
+      <div id="reg-ref-badge" class="ref-badge hidden">🎁 You were referred! Your referrer earns Ksh 50 when you activate.</div>
+      <button class="google-btn" onclick="googleAuth('register')">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Continue with Google
+      </button>
+      <div class="divider">or with email</div>
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="input" id="reg-name" placeholder="John Doe" type="text"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="input" id="reg-email" placeholder="you@email.com" type="email"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone (M-Pesa)</label>
+        <input class="input" id="reg-phone" placeholder="0712345678" type="tel"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input class="input" id="reg-username" placeholder="johndoe" type="text"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="input" id="reg-password" placeholder="••••••••" type="password"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Referral Code (Optional)</label>
+        <input class="input" id="reg-ref" placeholder="Enter referral code" type="text"/>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="registerUser()">Create Account →</button>
+      <div class="auth-switch">Already have an account? <a href="#" onclick="showPage('login')">Sign In</a></div>
+      <div class="auth-switch" style="margin-top:8px"><a href="#" onclick="showPage('landing')">← Back to Home</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE: LOGIN ══════════ -->
+<div id="page-login" class="hidden">
+  <div class="auth-wrap">
+    <div class="auth-box">
+      <span class="brand">Quantix</span>
+      <div class="auth-title">Welcome Back</div>
+      <div class="auth-sub">Sign in to continue earning</div>
+      <button class="google-btn" onclick="googleAuth('login')">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Continue with Google
+      </button>
+      <div class="divider">or with credentials</div>
+      <div class="form-group">
+        <label class="form-label">Email or Username</label>
+        <input class="input" id="login-id" placeholder="you@email.com or @username" type="text"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="input" id="login-pass" placeholder="••••••••" type="password"/>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="loginUser()">Sign In →</button>
+      <div class="auth-switch">Don't have an account? <a href="#" onclick="showPage('register')">Create one</a></div>
+      <div class="auth-switch" style="margin-top:8px"><a href="#" onclick="showPage('landing')">← Back to Home</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE: ACTIVATION ══════════ -->
+<div id="page-activation" class="hidden">
+  <div class="auth-wrap">
+    <div class="auth-box activation-box">
+      <span class="brand" style="display:block;text-align:center;font-size:1.6rem;margin-bottom:12px">Quantix</span>
+      <div class="auth-title">Activate Your Account</div>
+      <div class="auth-sub">One-time fee to unlock all earning features</div>
+      <div class="price-tag">Ksh 225</div>
+      <div class="price-sub">One-time activation · No monthly charges</div>
+      <ul class="benefit-list">
+        <li>5 daily tasks worth Ksh 20 each</li>
+        <li>Earn up to Ksh 100 per day</li>
+        <li>Referral system – earn Ksh 50 per referral</li>
+        <li>M-Pesa withdrawals from Ksh 1,000</li>
+        <li>Priority support & bonuses</li>
+      </ul>
+      <div id="activation-form">
+        <div class="form-group">
+          <label class="form-label">M-Pesa Phone Number</label>
+          <input class="input" id="act-phone" placeholder="07XXXXXXXX" type="tel"/>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="initiatePayment()">Pay via M-Pesa STK Push →</button>
+        <div style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:10px">You'll receive an M-Pesa prompt on your phone</div>
+      </div>
+      <div id="activation-checking" class="hidden">
+        <div class="status-checking">
+          <div class="spinner"></div>
+          <div id="activation-status-text">Waiting for M-Pesa confirmation...</div>
+          <div style="font-size:.75rem;margin-top:8px;color:var(--muted)">Check your phone for the STK Push prompt</div>
+        </div>
+        <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:12px" onclick="cancelCheck()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE: DASHBOARD ══════════ -->
+<div id="page-dashboard" class="hidden">
+  <div class="overlay-mask" id="overlayMask" onclick="closeSidebar()"></div>
+  <div class="dash-layout">
+    <div class="sidebar" id="sidebar">
+      <div class="brand" style="padding:0 24px 24px">Quantix<span style="-webkit-text-fill-color:rgba(255,255,255,.4);font-weight:300;font-family:'Syne';">.ke</span></div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" onclick="showTab('home')" id="nav-home"><span class="nav-icon">🏠</span>Dashboard</button>
+        <button class="nav-item" onclick="showTab('tasks')" id="nav-tasks"><span class="nav-icon">✅</span>Daily Tasks</button>
+        <button class="nav-item" onclick="showTab('earnings')" id="nav-earnings"><span class="nav-icon">💰</span>My Earnings</button>
+        <button class="nav-item" onclick="showTab('withdraw')" id="nav-withdraw"><span class="nav-icon">📤</span>Withdraw</button>
+        <button class="nav-item" onclick="showTab('referral')" id="nav-referral"><span class="nav-icon">👥</span>Referrals</button>
+        <button class="nav-item" onclick="showTab('notifications')" id="nav-notifications"><span class="nav-icon">🔔</span>Notifications</button>
+        <button class="nav-item" onclick="showTab('profile')" id="nav-profile"><span class="nav-icon">👤</span>Profile</button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-mini">
+          <div class="avatar" id="sb-avatar">?</div>
+          <div class="user-mini-info">
+            <div class="user-mini-name" id="sb-name">Loading...</div>
+            <div class="user-mini-email" id="sb-email">...</div>
+          </div>
+        </div>
+        <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:12px" onclick="logoutUser()">Sign Out</button>
+      </div>
+    </div>
+    <main class="dash-main">
+      <div class="dash-header">
+        <div>
+          <div class="page-title" id="tab-title">Dashboard</div>
+          <div class="page-subtitle" id="tab-subtitle">Welcome back! Here's your overview.</div>
+        </div>
+        <button class="mob-toggle" onclick="toggleSidebar()">☰</button>
+      </div>
+      <!-- Tab Content Areas -->
+      <div id="tab-home"></div>
+      <div id="tab-tasks" class="hidden"></div>
+      <div id="tab-earnings" class="hidden"></div>
+      <div id="tab-withdraw" class="hidden"></div>
+      <div id="tab-referral" class="hidden"></div>
+      <div id="tab-notifications" class="hidden"></div>
+      <div id="tab-profile" class="hidden"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ══════════ PAGE: ADMIN ══════════ -->
+<div id="page-admin" class="hidden">
+  <div class="dash-layout">
+    <div class="sidebar">
+      <div class="brand" style="padding:0 24px 24px">Q Admin</div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" onclick="adminTab('overview')" id="an-overview"><span class="nav-icon">📊</span>Overview</button>
+        <button class="nav-item" onclick="adminTab('users')" id="an-users"><span class="nav-icon">👥</span>All Users</button>
+        <button class="nav-item" onclick="adminTab('withdrawals')" id="an-withdrawals"><span class="nav-icon">💸</span>Withdrawals</button>
+        <button class="nav-item" onclick="adminTab('payments')" id="an-payments"><span class="nav-icon">✅</span>Activations</button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-mini">
+          <div class="avatar" style="background:linear-gradient(135deg,#ef4444,#f97316)">A</div>
+          <div class="user-mini-info">
+            <div class="user-mini-name">Admin</div>
+            <div class="user-mini-email">owner@quantix.ke</div>
+          </div>
+        </div>
+        <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:12px" onclick="logoutUser()">Sign Out</button>
+      </div>
+    </div>
+    <main class="dash-main">
+      <div class="dash-header">
+        <div>
+          <div class="page-title" id="admin-tab-title">Overview</div>
+          <div class="page-subtitle">Quantix Admin Panel</div>
+        </div>
+      </div>
+      <div id="admin-tab-overview"></div>
+      <div id="admin-tab-users" class="hidden"></div>
+      <div id="admin-tab-withdrawals" class="hidden"></div>
+      <div id="admin-tab-payments" class="hidden"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ══════════ MODALS ══════════ -->
+<div id="modal-task" class="modal-overlay hidden">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modal-task-title">Task</div>
+    <div id="modal-task-body" class="task-modal-content"></div>
+  </div>
+</div>
+<div id="modal-withdraw-confirm" class="modal-overlay hidden">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('modal-withdraw-confirm').classList.add('hidden')">✕</button>
+    <div class="modal-title">Withdrawal Request Submitted</div>
+    <div style="font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:20px">
+      Your withdrawal request has been received! 🎉<br/><br/>
+      Please take a <strong style="color:var(--text)">screenshot</strong> of your current balance and send it to the owner via WhatsApp or the contact below to complete processing.<br/><br/>
+      <div style="background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:4px">Contact Owner</div>
+        <div style="font-size:1.1rem;font-weight:700;color:var(--accent)">+254 700 000 000</div>
+        <div style="font-size:.75rem;color:var(--muted)">WhatsApp / Call</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="document.getElementById('modal-withdraw-confirm').classList.add('hidden')">Got it! ✓</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA STORE (localStorage)
+// ══════════════════════════════════════════════
+const ADMIN_EMAIL = 'admin@quantix.ke';
+const ADMIN_PASS  = 'quantix@admin2025';
+const PAYHERO_AUTH = 'Basic WVBoWVRjUlZqRExFSU5aUFFQZ1k6UnhmRnJOZVIwVnUxYnQ5NDQ2TjJNeU54V3g1ODFqV3BTdVFUTTR3eQ==';
+const CHANNEL_ID = 7380;
+
+function getUsers(){ return JSON.parse(localStorage.getItem('qx_users')||'[]') }
+function saveUsers(u){ localStorage.setItem('qx_users',JSON.stringify(u)) }
+function getUser(id){ return getUsers().find(u=>u.id===id) }
+function saveUser(updated){
+  const users=getUsers();
+  const i=users.findIndex(u=>u.id===updated.id);
+  if(i>=0) users[i]=updated; else users.push(updated);
+  saveUsers(users);
+}
+function getWithdrawals(){ return JSON.parse(localStorage.getItem('qx_withdrawals')||'[]') }
+function saveWithdrawals(w){ localStorage.setItem('qx_withdrawals',JSON.stringify(w)) }
+function currentUser(){ const id=localStorage.getItem('qx_session'); return id?getUser(id):null }
+
+// ══════════════════════════════════════════════
+// TASKS DEFINITION
+// ══════════════════════════════════════════════
+const TASK_DEFS = [
+  {id:'chat',   type:'chat',   title:'Daily Chat',      desc:'Chat with the Quantix community and engage with members.',       icon:'💬', earn:20, cls:'chat'},
+  {id:'survey', type:'survey', title:'Brand Survey',    desc:'Share your opinion on real brands and products.',                icon:'📊', earn:20, cls:'survey'},
+  {id:'trivia', type:'trivia', title:'Trivia Quiz',     desc:'Answer trivia questions and earn regardless of your answers.',  icon:'🧠', earn:20, cls:'trivia'},
+  {id:'video',  type:'video',  title:'Watch & Review',  desc:'Watch a short ad video and rate your experience.',              icon:'📺', earn:20, cls:'video'},
+  {id:'review', type:'review', title:'Product Review',  desc:'Write a quick review for a featured product or service.',       icon:'⭐', earn:20, cls:'review'},
+];
+
+// ══════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════
+function toast(msg, type='info'){
+  const el=document.createElement('div');
+  el.className=`toast-item toast-${type}`;
+  el.textContent=msg;
+  document.getElementById('toastContainer').appendChild(el);
+  setTimeout(()=>el.remove(),4000);
+}
+
+// ══════════════════════════════════════════════
+// PAGE ROUTING
+// ══════════════════════════════════════════════
+function showPage(page){
+  ['landing','register','login','activation','dashboard','admin'].forEach(p=>{
+    document.getElementById('page-'+p).classList.toggle('hidden', p!==page);
+  });
+  if(page==='register'){
+    const ref=new URLSearchParams(window.location.search).get('ref')||'';
+    if(ref){ document.getElementById('reg-ref').value=ref; document.getElementById('reg-ref-badge').classList.remove('hidden'); }
+  }
+  if(page==='dashboard') renderDashboard();
+  if(page==='admin') renderAdmin();
+  window.scrollTo(0,0);
+}
+function checkSession(){
+  const user=currentUser();
+  if(!user){ showPage('landing'); return; }
+  if(user.email===ADMIN_EMAIL){ showPage('admin'); return; }
+  if(!user.activated){ showPage('activation'); return; }
+  showPage('dashboard');
+}
+
+// ══════════════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════════════
+function generateId(){ return Date.now().toString(36)+Math.random().toString(36).slice(2) }
+function generateRefCode(name){ return name.replace(/\s/g,'').toUpperCase().slice(0,4)+Math.random().toString(36).slice(2,6).toUpperCase() }
+function todayKey(){ return new Date().toISOString().split('T')[0] }
+
+function registerUser(){
+  const name=document.getElementById('reg-name').value.trim();
+  const email=document.getElementById('reg-email').value.trim().toLowerCase();
+  const phone=document.getElementById('reg-phone').value.trim();
+  const username=document.getElementById('reg-username').value.trim().toLowerCase();
+  const pass=document.getElementById('reg-password').value;
+  const ref=document.getElementById('reg-ref').value.trim().toUpperCase();
+  if(!name||!email||!phone||!username||!pass){ toast('Please fill all required fields','error'); return; }
+  const users=getUsers();
+  if(users.find(u=>u.email===email)){ toast('Email already registered','error'); return; }
+  if(users.find(u=>u.username===username)){ toast('Username already taken','error'); return; }
+  const id=generateId();
+  const newUser={
+    id, name, email, phone, username, pass,
+    activated:false, balance:0, totalEarned:0,
+    refCode:generateRefCode(name), referredBy:ref||null,
+    referrals:[], tasksToday:{}, joinedAt:new Date().toISOString(),
+    notifications:[{id:'n1',text:'Welcome to Quantix! Activate your account to start earning.',time:new Date().toISOString(),read:false}],
+    earnings:[],
+  };
+  users.push(newUser);
+  saveUsers(users);
+  localStorage.setItem('qx_session',id);
+  toast('Account created! 🎉','success');
+  // Auto-fill phone on activation page
+  setTimeout(()=>{ const ph=document.getElementById('act-phone'); if(ph) ph.value=phone; },300);
+  showPage('activation');
+}
+
+function loginUser(){
+  const id=document.getElementById('login-id').value.trim().toLowerCase();
+  const pass=document.getElementById('login-pass').value;
+  if(!id||!pass){ toast('Enter credentials','error'); return; }
+  // Admin
+  if(id===ADMIN_EMAIL && pass===ADMIN_PASS){
+    localStorage.setItem('qx_session','__admin__');
+    let admUser=getUser('__admin__');
+    if(!admUser){ admUser={id:'__admin__',name:'Admin',email:ADMIN_EMAIL,pass:ADMIN_PASS,activated:true,balance:0,totalEarned:0,refCode:'ADMIN',referrals:[],tasksToday:{},joinedAt:new Date().toISOString(),notifications:[],earnings:[]}; saveUser(admUser); }
+    toast('Welcome, Admin!','success');
+    showPage('admin'); return;
+  }
+  const users=getUsers();
+  const user=users.find(u=>(u.email===id||u.username===id)&&u.pass===pass);
+  if(!user){ toast('Invalid credentials','error'); return; }
+  localStorage.setItem('qx_session',user.id);
+  toast('Welcome back, '+user.name.split(' ')[0]+'! 👋','success');
+  if(!user.activated){ showPage('activation'); return; }
+  showPage('dashboard');
+}
+
+function googleAuth(mode){
+  // Simulated Google Auth
+  const gName='Google User '+Math.floor(Math.random()*9000+1000);
+  const gEmail='google'+Date.now()+'@gmail.com';
+  if(mode==='register'){
+    const users=getUsers();
+    const id=generateId();
+    const newUser={id,name:gName,email:gEmail,phone:'',username:'user'+id.slice(-6),pass:'google',activated:false,balance:0,totalEarned:0,refCode:generateRefCode(gName),referredBy:null,referrals:[],tasksToday:{},joinedAt:new Date().toISOString(),notifications:[{id:'n1',text:'Welcome to Quantix! Activate your account to start earning.',time:new Date().toISOString(),read:false}],earnings:[]};
+    users.push(newUser); saveUsers(users);
+    localStorage.setItem('qx_session',id);
+    toast('Signed up with Google! ✓','success');
+    showPage('activation');
+  } else {
+    toast('No Google account found. Please register first.','error');
+  }
+}
+
+function logoutUser(){
+  localStorage.removeItem('qx_session');
+  toast('Signed out','info');
+  showPage('landing');
+}
+
+// ══════════════════════════════════════════════
+// PAYMENT (PayHero STK Push)
+// ══════════════════════════════════════════════
+let checkInterval=null;
+let activeRef=null;
+
+async function initiatePayment(){
+  const phone=document.getElementById('act-phone').value.trim();
+  if(!phone||phone.length<10){ toast('Enter a valid M-Pesa number','error'); return; }
+  const user=currentUser();
+  if(!user){ showPage('login'); return; }
+  const extRef='QX-'+user.id.slice(-8).toUpperCase();
+  activeRef=extRef;
+  document.getElementById('activation-form').classList.add('hidden');
+  document.getElementById('activation-checking').classList.remove('hidden');
+  document.getElementById('activation-status-text').textContent='Sending STK Push to '+phone+'...';
+
+  try {
+    const resp = await fetch('/api/pay',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({amount:225,phone_number:phone,channel_id:CHANNEL_ID,provider:'m-pesa',external_reference:extRef,customer_name:user.name,callback_url:window.location.origin+'/api/callback'})
+    });
+    const data=await resp.json();
+    if(data.success){
+      toast('STK Push sent! Check your phone 📱','info');
+      document.getElementById('activation-status-text').textContent='STK Push sent! Enter your M-Pesa PIN on your phone...';
+      startPolling(data.CheckoutRequestID||extRef, user.id, phone);
+    } else {
+      toast('Payment initiation failed. Try again.','error');
+      resetActivation();
+    }
+  } catch(e){
+    // For demo/local: allow manual simulation
+    console.warn('PayHero API not reachable:',e.message);
+    document.getElementById('activation-status-text').textContent='⚠️ Network issue — using test mode. Simulating payment...';
+    setTimeout(()=>completeActivation(user.id),4000);
+  }
+}
+
+function startPolling(checkoutId, userId, phone){
+  let attempts=0;
+  checkInterval=setInterval(async()=>{
+    attempts++;
+    if(attempts>24){ clearInterval(checkInterval); toast('Payment timed out. Please try again.','error'); resetActivation(); return; }
+    document.getElementById('activation-status-text').textContent='Verifying payment... ('+attempts+'/24)';
+    // Poll status
+    try {
+      const r=await fetch(`/api/status?reference=${activeRef}`);
+      const d=await r.json();
+      if(d.status==='SUCCESS'||d.status==='COMPLETE'||d.success===true){
+        clearInterval(checkInterval);
+        completeActivation(userId);
+      } else if(d.status==='FAILED'||d.status==='CANCELLED'){
+        clearInterval(checkInterval);
+        toast('Payment was cancelled or failed. Please try again.','error');
+        resetActivation();
+      }
+    } catch(e){ /* Keep polling */ }
+  },5000);
+}
+
+function completeActivation(userId){
+  const users=getUsers();
+  const user=users.find(u=>u.id===userId);
+  if(user){
+    user.activated=true;
+    user.activatedAt=new Date().toISOString();
+    user.notifications.push({id:'n'+Date.now(),text:'Account activated! 🎉 You can now start earning Ksh 100 daily.',time:new Date().toISOString(),read:false});
+    // Handle referral
+    if(user.referredBy){
+      const referrer=users.find(u=>u.refCode===user.referredBy);
+      if(referrer && !referrer.referrals.includes(userId)){
+        referrer.balance+=50;
+        referrer.totalEarned+=50;
+        referrer.referrals.push(userId);
+        referrer.earnings.push({amount:50,type:'referral',desc:'Referral bonus from '+user.name,date:new Date().toISOString()});
+        referrer.notifications.push({id:'n'+Date.now(),text:'🎉 '+user.name+' activated! You earned Ksh 50 referral bonus.',time:new Date().toISOString(),read:false});
+      }
+    }
+    saveUsers(users);
+    toast('Account activated! Start earning now! 🚀','success');
+    showPage('dashboard');
+  }
+}
+
+function cancelCheck(){ clearInterval(checkInterval); resetActivation(); }
+function resetActivation(){
+  document.getElementById('activation-form').classList.remove('hidden');
+  document.getElementById('activation-checking').classList.add('hidden');
+}
+
+// ══════════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════════
+let currentTab='home';
+
+function renderDashboard(){
+  const user=currentUser();
+  if(!user) return;
+  document.getElementById('sb-avatar').textContent=user.name[0].toUpperCase();
+  document.getElementById('sb-name').textContent=user.name;
+  document.getElementById('sb-email').textContent=user.email;
+  showTab('home');
+}
+
+function showTab(tab){
+  ['home','tasks','earnings','withdraw','referral','notifications','profile'].forEach(t=>{
+    document.getElementById('tab-'+t).classList.toggle('hidden',t!==tab);
+    document.getElementById('nav-'+t).classList.toggle('active',t===tab);
+  });
+  currentTab=tab;
+  const titles={home:'Dashboard',tasks:'Daily Tasks',earnings:'My Earnings',withdraw:'Withdraw Funds',referral:'Referral Program',notifications:'Notifications',profile:'My Profile'};
+  const subs={home:'Here\'s your overview for today',tasks:'Complete tasks to earn Ksh 20 each',earnings:'Your complete earning history',withdraw:'Request a withdrawal to M-Pesa',referral:'Invite friends & earn Ksh 50 each',notifications:'Stay updated',profile:'Manage your account'};
+  document.getElementById('tab-title').textContent=titles[tab];
+  document.getElementById('tab-subtitle').textContent=subs[tab];
+  const renders={home:renderHome,tasks:renderTasks,earnings:renderEarnings,withdraw:renderWithdraw,referral:renderReferral,notifications:renderNotifications,profile:renderProfile};
+  renders[tab]();
+  closeSidebar();
+}
+
+function renderHome(){
+  const user=currentUser();
+  const today=todayKey();
+  const doneTasks=Object.keys(user.tasksToday||{}).filter(k=>user.tasksToday[k]===today).length;
+  const dailyEarned=doneTasks*20;
+  document.getElementById('tab-home').innerHTML=`
+    <div class="stats-grid">
+      <div class="stat-card cyan">
+        <div class="stat-card-label">💰 Total Balance</div>
+        <div class="stat-card-val">Ksh ${user.balance.toLocaleString()}</div>
+        <div class="stat-card-sub">Available to withdraw</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-card-label">📈 Total Earned</div>
+        <div class="stat-card-val">Ksh ${user.totalEarned.toLocaleString()}</div>
+        <div class="stat-card-sub">All-time earnings</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-card-label">✅ Today's Tasks</div>
+        <div class="stat-card-val">${doneTasks}/5</div>
+        <div class="stat-card-sub">Ksh ${dailyEarned} earned today</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-card-label">👥 Referrals</div>
+        <div class="stat-card-val">${user.referrals.length}</div>
+        <div class="stat-card-sub">Ksh ${user.referrals.length*50} earned</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+      <div class="card">
+        <div style="font-size:.8rem;color:var(--muted);margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px">Today's Progress</div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px">
+          <div style="flex:1">
+            <div class="progress-wrap" style="height:10px">
+              <div class="progress-bar" style="width:${(doneTasks/5)*100}%"></div>
+            </div>
+          </div>
+          <div style="font-family:'Syne';font-weight:700;font-size:1rem;color:var(--accent)">${doneTasks}/5</div>
+        </div>
+        <div style="font-size:.82rem;color:var(--muted)">${5-doneTasks} task${5-doneTasks!==1?'s':''} remaining · Ksh ${(5-doneTasks)*20} left to earn today</div>
+        <button class="btn btn-primary btn-sm" style="margin-top:14px" onclick="showTab('tasks')">Go to Tasks →</button>
+      </div>
+      <div class="card">
+        <div style="font-size:.8rem;color:var(--muted);margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px">Withdrawal Status</div>
+        <div style="font-family:'Syne';font-size:1.4rem;font-weight:800;color:${user.balance>=1000?'var(--accent3)':'var(--gold)'}">Ksh ${user.balance.toLocaleString()}</div>
+        <div style="font-size:.82rem;color:var(--muted);margin-top:4px">${user.balance>=1000?'✅ You can withdraw now!':'Need Ksh '+(1000-user.balance)+' more to withdraw'}</div>
+        ${user.balance>=1000?`<button class="btn btn-green btn-sm" style="margin-top:14px" onclick="showTab('withdraw')">Withdraw Now →</button>`:`<div class="progress-wrap" style="margin-top:14px"><div class="progress-bar" style="width:${Math.min((user.balance/1000)*100,100)}%;background:linear-gradient(90deg,var(--gold),#f97316)"></div></div>`}
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-size:.95rem;font-weight:700;margin-bottom:14px">📣 Quick Referral</div>
+      <div style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Share your link and earn Ksh 50 per activation!</div>
+      <div class="ref-link-box">
+        <span class="link">${window.location.origin}${window.location.pathname}?ref=${user.refCode}</span>
+        <button class="copy-btn" onclick="copyRef()">Copy</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderTasks(){
+  const user=currentUser();
+  const today=todayKey();
+  let html=`<div class="tasks-grid">`;
+  TASK_DEFS.forEach(task=>{
+    const done=user.tasksToday&&user.tasksToday[task.id]===today;
+    html+=`
+      <div class="task-card ${task.cls} ${done?'done':''}" onclick="${done?'':'openTask(\''+task.id+'\')'}">
+        <div class="task-header">
+          <div class="task-icon">${task.icon}</div>
+          <div class="task-earn">Ksh ${task.earn}<br/><small>/task</small></div>
+        </div>
+        <div class="task-title">${task.title}</div>
+        <div class="task-desc">${task.desc}</div>
+        <div class="task-footer">
+          <div class="progress-wrap"><div class="progress-bar" style="width:${done?100:0}%"></div></div>
+          <span class="badge ${done?'badge-green':'badge-blue'}">${done?'✓ Done':'Ksh 20'}</span>
+        </div>
+      </div>`;
+  });
+  html+=`</div>
+    <div class="card" style="margin-top:20px;display:flex;align-items:center;gap:16px">
+      <div style="font-size:2rem">⏰</div>
+      <div>
+        <div style="font-weight:700;margin-bottom:4px">Tasks Reset Daily</div>
+        <div style="font-size:.82rem;color:var(--muted)">New tasks available every day at midnight. Complete all 5 for Ksh 100!</div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div class="countdown-wrap"><div class="countdown-dot"></div>Tasks Active</div>
+      </div>
+    </div>`;
+  document.getElementById('tab-tasks').innerHTML=html;
+}
+
+function renderEarnings(){
+  const user=currentUser();
+  const items=user.earnings||[];
+  let html=`
+    <div class="stats-grid" style="margin-bottom:24px">
+      <div class="stat-card cyan"><div class="stat-card-label">Total Earned</div><div class="stat-card-val">Ksh ${user.totalEarned.toLocaleString()}</div></div>
+      <div class="stat-card green"><div class="stat-card-label">Current Balance</div><div class="stat-card-val">Ksh ${user.balance.toLocaleString()}</div></div>
+      <div class="stat-card gold"><div class="stat-card-label">Tasks Completed</div><div class="stat-card-val">${items.filter(e=>e.type==='task').length}</div></div>
+      <div class="stat-card purple"><div class="stat-card-label">Referral Income</div><div class="stat-card-val">Ksh ${items.filter(e=>e.type==='referral').reduce((a,c)=>a+c.amount,0)}</div></div>
+    </div>
+    <div class="card">
+      <div style="font-size:.95rem;font-weight:700;margin-bottom:16px">Earnings History</div>`;
+  if(items.length===0){
+    html+=`<div style="text-align:center;padding:40px;color:var(--muted)">No earnings yet. Complete your first task!</div>`;
+  } else {
+    html+=`<table class="ref-table"><thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Type</th></tr></thead><tbody>`;
+    [...items].reverse().forEach(e=>{
+      html+=`<tr><td>${new Date(e.date).toLocaleDateString()}</td><td>${e.desc}</td><td style="color:var(--accent3);font-weight:700">+Ksh ${e.amount}</td><td><span class="badge ${e.type==='referral'?'badge-purple':'badge-blue'}">${e.type}</span></td></tr>`;
+    });
+    html+=`</tbody></table>`;
+  }
+  html+=`</div>`;
+  document.getElementById('tab-earnings').innerHTML=html;
+}
+
+function renderWithdraw(){
+  const user=currentUser();
+  const canWithdraw=user.balance>=1000;
+  const wds=getWithdrawals().filter(w=>w.userId===user.id);
+  document.getElementById('tab-withdraw').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div class="card withdraw-card">
+        <div class="bal-display">
+          <div class="bal-label">Available Balance</div>
+          <div class="bal-amount">Ksh ${user.balance.toLocaleString()}</div>
+          <div style="font-size:.75rem;color:var(--muted);margin-top:6px">Min withdrawal: Ksh 1,000</div>
+        </div>
+        <div class="withdraw-info">
+          <strong>How withdrawals work:</strong><br/>
+          1. Request withdrawal below<br/>
+          2. Take a screenshot of your balance<br/>
+          3. Send it to the owner via WhatsApp<br/>
+          4. Receive payment within 24 hours
+        </div>
+        ${canWithdraw?`
+          <div class="form-group">
+            <label class="form-label">M-Pesa Phone Number</label>
+            <input class="input" id="wd-phone" value="${user.phone}" placeholder="07XXXXXXXX" type="tel"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Amount (Ksh)</label>
+            <input class="input" id="wd-amount" value="${user.balance}" type="number" min="1000" max="${user.balance}"/>
+          </div>
+          <button class="btn btn-green" style="width:100%;justify-content:center" onclick="requestWithdraw()">Request Withdrawal →</button>
+        `:`
+          <div style="text-align:center;padding:20px;background:var(--bg3);border-radius:12px">
+            <div style="font-size:2rem;margin-bottom:8px">🔒</div>
+            <div style="font-weight:700;margin-bottom:6px">Not enough balance</div>
+            <div style="font-size:.82rem;color:var(--muted)">You need Ksh ${(1000-user.balance).toLocaleString()} more</div>
+            <div class="progress-wrap" style="margin-top:14px"><div class="progress-bar" style="width:${Math.min((user.balance/1000)*100,100)}%;background:linear-gradient(90deg,var(--gold),#f97316)"></div></div>
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:16px" onclick="showTab('tasks')">Complete Tasks to Earn More →</button>
+        `}
+      </div>
+      <div class="card">
+        <div style="font-size:.95rem;font-weight:700;margin-bottom:16px">Withdrawal History</div>
+        ${wds.length===0?`<div style="text-align:center;padding:40px;color:var(--muted)">No withdrawals yet</div>`:`
+          <table class="ref-table"><thead><tr><th>Date</th><th>Amount</th><th>Status</th></tr></thead><tbody>
+          ${wds.map(w=>`<tr><td>${new Date(w.date).toLocaleDateString()}</td><td style="color:var(--gold);font-weight:700">Ksh ${w.amount}</td><td><span class="badge ${w.status==='paid'?'badge-green':w.status==='rejected'?'badge-red':'badge-yellow'}">${w.status}</span></td></tr>`).join('')}
+          </tbody></table>`}
+      </div>
+    </div>`;
+}
+
+function requestWithdraw(){
+  const user=currentUser();
+  const phone=document.getElementById('wd-phone').value.trim();
+  const amount=parseInt(document.getElementById('wd-amount').value);
+  if(!phone){ toast('Enter phone number','error'); return; }
+  if(amount<1000||amount>user.balance){ toast('Invalid amount','error'); return; }
+  const wds=getWithdrawals();
+  wds.push({id:'wd'+Date.now(),userId:user.id,name:user.name,phone,amount,date:new Date().toISOString(),status:'pending'});
+  saveWithdrawals(wds);
+  document.getElementById('modal-withdraw-confirm').classList.remove('hidden');
+  renderWithdraw();
+}
+
+function renderReferral(){
+  const user=currentUser();
+  const allUsers=getUsers();
+  const refs=user.referrals.map(id=>allUsers.find(u=>u.id===id)).filter(Boolean);
+  document.getElementById('tab-referral').innerHTML=`
+    <div class="card" style="margin-bottom:20px">
+      <div style="font-size:.95rem;font-weight:700;margin-bottom:6px">Your Referral Link</div>
+      <div style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Share this link. You earn Ksh 50 for each person who activates their account.</div>
+      <div class="ref-link-box">
+        <span class="link">${window.location.origin}${window.location.pathname}?ref=${user.refCode}</span>
+        <button class="copy-btn" onclick="copyRef()">Copy</button>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" onclick="shareWhatsApp()">📱 Share on WhatsApp</button>
+        <button class="btn btn-outline btn-sm" onclick="copyRef()">📋 Copy Link</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px">
+      <div class="card" style="text-align:center"><div style="font-size:1.6rem;font-weight:800;color:var(--accent)">${refs.length}</div><div style="font-size:.8rem;color:var(--muted)">Total Referrals</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:1.6rem;font-weight:800;color:var(--gold)">Ksh ${refs.length*50}</div><div style="font-size:.8rem;color:var(--muted)">Total Earned</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:1.6rem;font-weight:800;color:var(--accent3)">Ksh 50</div><div style="font-size:.8rem;color:var(--muted)">Per Activation</div></div>
+    </div>
+    <div class="card">
+      <div style="font-size:.95rem;font-weight:700;margin-bottom:16px">Your Referrals (${refs.length})</div>
+      ${refs.length===0?`<div style="text-align:center;padding:40px;color:var(--muted)">No referrals yet. Share your link to start earning!</div>`:`
+        <table class="ref-table"><thead><tr><th>Name</th><th>Joined</th><th>Status</th><th>Earned</th></tr></thead><tbody>
+        ${refs.map(r=>`<tr><td><div style="font-weight:600">${r.name}</div><div style="font-size:.75rem;color:var(--muted)">${r.username?'@'+r.username:r.email}</div></td><td>${new Date(r.joinedAt).toLocaleDateString()}</td><td><span class="badge ${r.activated?'badge-green':'badge-yellow'}">${r.activated?'Active':'Pending'}</span></td><td style="color:var(--gold);font-weight:700">${r.activated?'Ksh 50':'Ksh 0'}</td></tr>`).join('')}
+        </tbody></table>`}
+    </div>`;
+}
+
+function renderNotifications(){
+  const user=currentUser();
+  const notifs=user.notifications||[];
+  // Mark all read
+  const users=getUsers();
+  const u=users.find(x=>x.id===user.id);
+  if(u){ u.notifications.forEach(n=>n.read=true); saveUsers(users); }
+  document.getElementById('tab-notifications').innerHTML=`
+    <div class="card">
+      ${notifs.length===0?`<div style="text-align:center;padding:40px;color:var(--muted)">No notifications yet</div>`:`
+        ${[...notifs].reverse().map(n=>`
+          <div class="notif-item">
+            <div class="notif-dot ${n.read?'read':''}"></div>
+            <div>
+              <div class="notif-text">${n.text}</div>
+              <div class="notif-time">${timeAgo(n.time)}</div>
+            </div>
+          </div>`).join('')}`}
+    </div>`;
+}
+
+function renderProfile(){
+  const user=currentUser();
+  document.getElementById('tab-profile').innerHTML=`
+    <div class="card" style="margin-bottom:20px">
+      <div class="profile-header">
+        <div class="avatar avatar-lg">${user.name[0].toUpperCase()}</div>
+        <div>
+          <div style="font-size:1.2rem;font-weight:700">${user.name}</div>
+          <div style="color:var(--muted);font-size:.85rem">@${user.username||'user'} · ${user.email}</div>
+          <span class="badge badge-green" style="margin-top:6px">✓ Active Member</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="form-group"><label class="form-label">Full Name</label><input class="input" id="prof-name" value="${user.name}" type="text"/></div>
+        <div class="form-group"><label class="form-label">Phone (M-Pesa)</label><input class="input" id="prof-phone" value="${user.phone||''}" type="tel"/></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="input" value="${user.email}" type="email" disabled style="opacity:.6"/></div>
+        <div class="form-group"><label class="form-label">Username</label><input class="input" value="@${user.username||'user'}" type="text" disabled style="opacity:.6"/></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="saveProfile()">Save Changes</button>
+    </div>
+    <div class="card" style="margin-bottom:20px">
+      <div style="font-size:.95rem;font-weight:700;margin-bottom:16px">Account Stats</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+        <div style="text-align:center;padding:14px;background:var(--bg3);border-radius:12px"><div style="font-size:1.4rem;font-weight:800;color:var(--accent)">Ksh ${user.totalEarned}</div><div style="font-size:.75rem;color:var(--muted)">Total Earned</div></div>
+        <div style="text-align:center;padding:14px;background:var(--bg3);border-radius:12px"><div style="font-size:1.4rem;font-weight:800;color:var(--gold)">${user.referrals.length}</div><div style="font-size:.75rem;color:var(--muted)">Referrals</div></div>
+        <div style="text-align:center;padding:14px;background:var(--bg3);border-radius:12px"><div style="font-size:1.4rem;font-weight:800;color:var(--accent3)">${user.earnings?user.earnings.filter(e=>e.type==='task').length:0}</div><div style="font-size:.75rem;color:var(--muted)">Tasks Done</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-size:.95rem;font-weight:700;margin-bottom:6px;color:var(--danger)">Danger Zone</div>
+      <div style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Actions that cannot be undone</div>
+      <button class="btn btn-danger btn-sm" onclick="logoutUser()">Sign Out</button>
+    </div>`;
+}
+
+function saveProfile(){
+  const users=getUsers();
+  const user=users.find(u=>u.id===currentUser().id);
+  user.name=document.getElementById('prof-name').value.trim()||user.name;
+  user.phone=document.getElementById('prof-phone').value.trim()||user.phone;
+  saveUsers(users);
+  document.getElementById('sb-name').textContent=user.name;
+  toast('Profile updated!','success');
+}
+
+// ══════════════════════════════════════════════
+// TASK MODALS
+// ══════════════════════════════════════════════
+const SURVEYS = [
+  {q:'How often do you shop online?', opts:['Daily','Weekly','Monthly','Rarely']},
+  {q:'What influences your buying decisions most?', opts:['Price','Brand','Reviews','Friends']},
+  {q:'How do you usually pay for online purchases?', opts:['M-Pesa','Bank Transfer','Card','Cash on delivery']},
+  {q:'How satisfied are you with Safaricom services?', opts:['Very satisfied','Satisfied','Neutral','Unsatisfied']},
+];
+const TRIVIA = [
+  {q:'What is the capital city of Kenya?', opts:['Mombasa','Nairobi','Kisumu','Nakuru'], ans:1},
+  {q:'Which currency is used in Kenya?', opts:['Dollar','Shilling','Pound','Euro'], ans:1},
+  {q:'What is 15% of 2000?', opts:['150','200','300','400'], ans:2},
+  {q:'Who invented the telephone?', opts:['Edison','Bell','Tesla','Marconi'], ans:1},
+  {q:'Which planet is closest to the sun?', opts:['Earth','Venus','Mercury','Mars'], ans:2},
+];
+const CHAT_MSGS = [
+  ['Hello! Welcome to the Quantix Community Chat 👋','What brings you here today?','Did you know you can earn Ksh 100 daily on Quantix?'],
+  ['Great to have you here! 😊','What tasks have you completed today?','Keep grinding! Every task counts! 💪'],
+];
+
+function openTask(taskId){
+  const task=TASK_DEFS.find(t=>t.id===taskId);
+  document.getElementById('modal-task-title').textContent=task.icon+' '+task.title;
+  document.getElementById('modal-task').classList.remove('hidden');
+  const body=document.getElementById('modal-task-body');
+
+  if(task.type==='chat'){
+    const msgs=CHAT_MSGS[Math.floor(Math.random()*CHAT_MSGS.length)];
+    let msgHtml=msgs.map(m=>`<div class="msg bot">${m}</div>`).join('');
+    body.innerHTML=`
+      <div class="chat-area" id="chatArea">${msgHtml}</div>
+      <div style="display:flex;gap:8px">
+        <input class="input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChat()"/>
+        <button class="btn btn-primary btn-sm" onclick="sendChat()">Send</button>
+      </div>
+      <div style="font-size:.75rem;color:var(--muted);margin-top:8px;text-align:center">Send 2 messages to complete this task</div>
+      <div id="chat-progress" style="display:none;margin-top:16px"></div>`;
+    window._chatCount=0;
+
+  } else if(task.type==='survey'){
+    const s=SURVEYS[Math.floor(Math.random()*SURVEYS.length)];
+    body.innerHTML=`
+      <div class="survey-q">
+        <p>📋 ${s.q}</p>
+        ${s.opts.map((o,i)=>`<div class="survey-opt" onclick="selectSurvey(this,${i},'${taskId}')">${o}</div>`).join('')}
+      </div>
+      <div id="survey-result"></div>`;
+
+  } else if(task.type==='trivia'){
+    const t=TRIVIA[Math.floor(Math.random()*TRIVIA.length)];
+    body.innerHTML=`
+      <p style="font-size:.95rem;font-weight:600;margin-bottom:16px">❓ ${t.q}</p>
+      ${t.opts.map((o,i)=>`<div class="trivia-opt" onclick="answerTrivia(this,${i},${t.ans},'${taskId}')">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}
+      <div id="trivia-result"></div>`;
+
+  } else if(task.type==='video'){
+    let secs=15;
+    body.innerHTML=`
+      <div style="background:var(--bg3);border-radius:12px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;margin-bottom:16px;border:1px solid var(--border)">
+        <div style="text-align:center">
+          <div style="font-size:3rem">📺</div>
+          <div style="font-size:.9rem;color:var(--muted);margin-top:8px">Ad Video Playing...</div>
+          <div id="vid-timer" style="font-size:1.4rem;font-weight:800;color:var(--accent);margin-top:8px">${secs}s</div>
+        </div>
+      </div>
+      <div style="font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:12px">Watch the full video to earn Ksh 20</div>
+      <div id="vid-btn"></div>`;
+    const iv=setInterval(()=>{
+      secs--;
+      const el=document.getElementById('vid-timer');
+      if(el) el.textContent=secs+'s'; else { clearInterval(iv); return; }
+      if(secs<=0){
+        clearInterval(iv);
+        document.getElementById('vid-btn').innerHTML=`<button class="btn btn-green" style="width:100%;justify-content:center" onclick="completeTask('${taskId}')">✓ Claim Ksh 20</button>`;
+      }
+    },1000);
+
+  } else if(task.type==='review'){
+    body.innerHTML=`
+      <div style="background:var(--bg3);border-radius:12px;padding:16px;margin-bottom:16px;border:1px solid var(--border)">
+        <div style="font-weight:700;margin-bottom:4px">⭐ Featured Product</div>
+        <div style="font-size:.85rem;color:var(--muted)">Safaricom Postpay Plan – Unlimited Calls</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Rating</label>
+        <div id="star-rating" style="display:flex;gap:8px;font-size:1.8rem;cursor:pointer;margin-bottom:12px">
+          ${[1,2,3,4,5].map(i=>`<span onclick="setStars(${i})" id="star${i}" style="opacity:.4;transition:.2s">★</span>`).join('')}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Review</label>
+        <textarea class="input" id="review-text" rows="3" placeholder="Share your experience (min 20 characters)..." style="resize:vertical"></textarea>
+      </div>
+      <button class="btn btn-green" style="width:100%;justify-content:center" onclick="submitReview('${taskId}')">Submit Review & Earn Ksh 20</button>`;
+    window._stars=0;
+  }
+}
+
+function setStars(n){
+  window._stars=n;
+  [1,2,3,4,5].forEach(i=>{ const s=document.getElementById('star'+i); if(s) s.style.opacity=i<=n?'1':'.4'; });
+}
+
+function submitReview(taskId){
+  const text=document.getElementById('review-text').value.trim();
+  if(!window._stars){ toast('Please select a rating','error'); return; }
+  if(text.length<20){ toast('Write at least 20 characters','error'); return; }
+  completeTask(taskId);
+}
+
+function sendChat(){
+  const input=document.getElementById('chatInput');
+  if(!input||!input.value.trim()) return;
+  const area=document.getElementById('chatArea');
+  area.innerHTML+=`<div class="msg user">${input.value}</div>`;
+  area.scrollTop=area.scrollHeight;
+  input.value='';
+  window._chatCount=(window._chatCount||0)+1;
+  setTimeout(()=>{
+    const replies=['Cool! Keep engaging! 😊','Nice one! Every message earns!','Great point! 👏','You\'re doing great!'];
+    area.innerHTML+=`<div class="msg bot">${replies[Math.floor(Math.random()*replies.length)]}</div>`;
+    area.scrollTop=area.scrollHeight;
+    if(window._chatCount>=2){
+      document.getElementById('chat-progress').style.display='block';
+      document.getElementById('chat-progress').innerHTML=`<button class="btn btn-green" style="width:100%;justify-content:center" onclick="completeTask('chat')">✓ Claim Ksh 20</button>`;
+    }
+  },800);
+}
+
+function selectSurvey(el, idx, taskId){
+  document.querySelectorAll('.survey-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  setTimeout(()=>{
+    document.getElementById('survey-result').innerHTML=`
+      <div style="background:rgba(16,185,129,.1);border:1px solid var(--accent3);border-radius:10px;padding:14px;text-align:center;margin-top:12px">
+        <div style="color:var(--accent3);font-weight:700;margin-bottom:8px">✓ Response Recorded!</div>
+        <button class="btn btn-green btn-sm" onclick="completeTask('${taskId}')">Claim Ksh 20</button>
+      </div>`;
+  },600);
+}
+
+function answerTrivia(el, chosen, ans, taskId){
+  document.querySelectorAll('.trivia-opt').forEach(o=>o.style.pointerEvents='none');
+  const correct=chosen===ans;
+  el.classList.add(correct?'correct':'wrong');
+  if(!correct) document.querySelectorAll('.trivia-opt')[ans].classList.add('correct');
+  document.getElementById('trivia-result').innerHTML=`
+    <div style="margin-top:12px;text-align:center">
+      <div style="font-size:1.1rem;font-weight:700;color:${correct?'var(--accent3)':'var(--gold)'};margin-bottom:8px">${correct?'🎉 Correct!':'Good try! You still earn!'}</div>
+      <button class="btn btn-green btn-sm" onclick="completeTask('${taskId}')">Claim Ksh 20</button>
+    </div>`;
+}
+
+function completeTask(taskId){
+  const user=currentUser();
+  const today=todayKey();
+  const users=getUsers();
+  const u=users.find(x=>x.id===user.id);
+  if(!u.tasksToday) u.tasksToday={};
+  u.tasksToday[taskId]=today;
+  u.balance+=20;
+  u.totalEarned+=20;
+  if(!u.earnings) u.earnings=[];
+  const task=TASK_DEFS.find(t=>t.id===taskId);
+  u.earnings.push({amount:20,type:'task',desc:task.title+' completed',date:new Date().toISOString()});
+  saveUsers(users);
+  closeModal();
+  toast('✓ Ksh 20 earned! Great job! 🎉','success');
+  renderTasks();
+  // Update sidebar balance display briefly
+  setTimeout(renderHome,100);
+}
+
+function closeModal(){ document.getElementById('modal-task').classList.add('hidden'); }
+
+// ══════════════════════════════════════════════
+// ADMIN PANEL
+// ══════════════════════════════════════════════
+function renderAdmin(){ adminTab('overview'); }
+
+function adminTab(tab){
+  ['overview','users','withdrawals','payments'].forEach(t=>{
+    document.getElementById('admin-tab-'+t).classList.toggle('hidden',t!==tab);
+    document.getElementById('an-'+t).classList.toggle('active',t===tab);
+  });
+  const titles={overview:'Overview',users:'All Users',withdrawals:'Withdrawals',payments:'Activations'};
+  document.getElementById('admin-tab-title').textContent=titles[tab];
+  if(tab==='overview') renderAdminOverview();
+  if(tab==='users') renderAdminUsers();
+  if(tab==='withdrawals') renderAdminWithdrawals();
+  if(tab==='payments') renderAdminPayments();
+}
+
+function renderAdminOverview(){
+  const users=getUsers().filter(u=>u.id!=='__admin__');
+  const activated=users.filter(u=>u.activated).length;
+  const totalBal=users.reduce((a,u)=>a+u.balance,0);
+  const totalEarned=users.reduce((a,u)=>a+u.totalEarned,0);
+  const wds=getWithdrawals();
+  document.getElementById('admin-tab-overview').innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:28px">
+      <div class="admin-stat"><div class="admin-stat-val">${users.length}</div><div class="admin-stat-label">Total Users</div></div>
+      <div class="admin-stat"><div class="admin-stat-val" style="color:var(--accent3)">${activated}</div><div class="admin-stat-label">Activated</div></div>
+      <div class="admin-stat"><div class="admin-stat-val" style="color:var(--gold)">Ksh ${totalBal.toLocaleString()}</div><div class="admin-stat-label">Total Balances</div></div>
+      <div class="admin-stat"><div class="admin-stat-val" style="color:#a78bfa">Ksh ${totalEarned.toLocaleString()}</div><div class="admin-stat-label">Total Earned</div></div>
+      <div class="admin-stat"><div class="admin-stat-val" style="color:var(--danger)">${wds.filter(w=>w.status==='pending').length}</div><div class="admin-stat-label">Pending Withdrawals</div></div>
+      <div class="admin-stat"><div class="admin-stat-val" style="color:var(--accent3)">Ksh ${activated*225}</div><div class="admin-stat-label">Activation Revenue</div></div>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:16px">Recent Signups</div>
+      <table class="admin-table">
+        <thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Balance</th><th>Joined</th></tr></thead>
+        <tbody>${[...users].reverse().slice(0,10).map(u=>`
+          <tr>
+            <td><div style="font-weight:600">${u.name}</div></td>
+            <td style="color:var(--muted)">${u.email}</td>
+            <td><span class="badge ${u.activated?'badge-green':'badge-yellow'}">${u.activated?'Active':'Pending'}</span></td>
+            <td style="color:var(--gold);font-weight:700">Ksh ${u.balance}</td>
+            <td style="color:var(--muted)">${new Date(u.joinedAt).toLocaleDateString()}</td>
+          </tr>`).join('')}</tbody>
+      </table>
+    </div>`;
+}
+
+function renderAdminUsers(){
+  const users=getUsers().filter(u=>u.id!=='__admin__');
+  document.getElementById('admin-tab-users').innerHTML=`
+    <div class="search-bar">
+      <input class="input" id="admin-search" placeholder="Search users..." oninput="filterAdminUsers()" type="text"/>
+      <span style="align-self:center;color:var(--muted);font-size:.85rem">${users.length} total</span>
+    </div>
+    <div class="card">
+      <div id="admin-users-table">
+        ${adminUsersTable(users)}
+      </div>
+    </div>`;
+}
+
+function adminUsersTable(users){
+  return `<table class="admin-table">
+    <thead><tr><th>Name</th><th>Email / Phone</th><th>Status</th><th>Balance</th><th>Earned</th><th>Referrals</th><th>Tasks</th><th>Actions</th></tr></thead>
+    <tbody>${users.map(u=>`
+      <tr>
+        <td><div style="font-weight:600">${u.name}</div><div style="font-size:.72rem;color:var(--muted)">@${u.username||'?'}</div></td>
+        <td><div style="font-size:.82rem">${u.email}</div><div style="font-size:.72rem;color:var(--muted)">${u.phone||'—'}</div></td>
+        <td><span class="badge ${u.activated?'badge-green':'badge-yellow'}">${u.activated?'Active':'Pending'}</span></td>
+        <td style="color:var(--gold);font-weight:700">Ksh ${u.balance}</td>
+        <td style="color:var(--accent3)">Ksh ${u.totalEarned}</td>
+        <td style="color:#a78bfa">${u.referrals.length}</td>
+        <td>${u.earnings?u.earnings.filter(e=>e.type==='task').length:0}</td>
+        <td>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            ${!u.activated?`<button class="btn btn-green btn-sm" onclick="adminActivate('${u.id}')">Activate</button>`:''}
+            <button class="btn btn-outline btn-sm" onclick="adminAddBonus('${u.id}')">+Bonus</button>
+            <button class="btn btn-danger btn-sm" onclick="adminDeleteUser('${u.id}')">Del</button>
+          </div>
+        </td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+function filterAdminUsers(){
+  const q=document.getElementById('admin-search').value.toLowerCase();
+  const users=getUsers().filter(u=>u.id!=='__admin__').filter(u=>u.name.toLowerCase().includes(q)||u.email.toLowerCase().includes(q)||(u.username||'').includes(q));
+  document.getElementById('admin-users-table').innerHTML=adminUsersTable(users);
+}
+
+function adminActivate(id){
+  const users=getUsers();
+  const u=users.find(x=>x.id===id);
+  if(u){ u.activated=true; u.activatedAt=new Date().toISOString(); u.notifications.push({id:'n'+Date.now(),text:'Your account has been manually activated by admin! 🎉',time:new Date().toISOString(),read:false}); saveUsers(users); toast('User activated!','success'); renderAdminUsers(); }
+}
+function adminAddBonus(id){
+  const amt=parseInt(prompt('Enter bonus amount (Ksh):'));
+  if(!amt||isNaN(amt)||amt<=0){ toast('Invalid amount','error'); return; }
+  const users=getUsers();
+  const u=users.find(x=>x.id===id);
+  if(u){ u.balance+=amt; u.totalEarned+=amt; if(!u.earnings)u.earnings=[]; u.earnings.push({amount:amt,type:'bonus',desc:'Admin bonus',date:new Date().toISOString()}); u.notifications.push({id:'n'+Date.now(),text:'🎁 Admin added Ksh '+amt+' bonus to your account!',time:new Date().toISOString(),read:false}); saveUsers(users); toast('Bonus added!','success'); renderAdminUsers(); }
+}
+function adminDeleteUser(id){
+  if(!confirm('Delete this user permanently?')) return;
+  const users=getUsers().filter(u=>u.id!==id);
+  saveUsers(users);
+  toast('User deleted','info');
+  renderAdminUsers();
+}
+
+function renderAdminWithdrawals(){
+  const wds=getWithdrawals();
+  document.getElementById('admin-tab-withdrawals').innerHTML=`
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:16px">All Withdrawal Requests</div>
+      ${wds.length===0?`<div style="text-align:center;padding:40px;color:var(--muted)">No withdrawal requests yet</div>`:`
+        <table class="admin-table">
+          <thead><tr><th>Date</th><th>User</th><th>Phone</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>${[...wds].reverse().map(w=>`
+            <tr>
+              <td style="color:var(--muted);font-size:.82rem">${new Date(w.date).toLocaleString()}</td>
+              <td><div style="font-weight:600">${w.name}</div></td>
+              <td>${w.phone}</td>
+              <td style="color:var(--gold);font-weight:700">Ksh ${w.amount}</td>
+              <td><span class="badge ${w.status==='paid'?'badge-green':w.status==='rejected'?'badge-red':'badge-yellow'}">${w.status}</span></td>
+              <td>
+                <div style="display:flex;gap:6px">
+                  ${w.status==='pending'?`
+                    <button class="btn btn-green btn-sm" onclick="adminPayWd('${w.id}')">Mark Paid</button>
+                    <button class="btn btn-danger btn-sm" onclick="adminRejectWd('${w.id}')">Reject</button>
+                  `:'—'}
+                </div>
+              </td>
+            </tr>`).join('')}
+          </tbody>
+        </table>`}
+    </div>`;
+}
+
+function adminPayWd(id){
+  const wds=getWithdrawals();
+  const wd=wds.find(w=>w.id===id);
+  if(wd){
+    wd.status='paid';
+    wd.paidAt=new Date().toISOString();
+    saveWithdrawals(wds);
+    // Deduct from user balance
+    const users=getUsers();
+    const u=users.find(x=>x.id===wd.userId);
+    if(u){ u.balance=Math.max(0,u.balance-wd.amount); u.notifications.push({id:'n'+Date.now(),text:'✅ Your withdrawal of Ksh '+wd.amount+' has been processed!',time:new Date().toISOString(),read:false}); saveUsers(users); }
+    toast('Withdrawal marked as paid!','success');
+    renderAdminWithdrawals();
+  }
+}
+function adminRejectWd(id){
+  const wds=getWithdrawals();
+  const wd=wds.find(w=>w.id===id);
+  if(wd){
+    wd.status='rejected';
+    saveWithdrawals(wds);
+    const users=getUsers();
+    const u=users.find(x=>x.id===wd.userId);
+    if(u){ u.notifications.push({id:'n'+Date.now(),text:'❌ Your withdrawal request of Ksh '+wd.amount+' was rejected. Contact support.',time:new Date().toISOString(),read:false}); saveUsers(users); }
+    toast('Withdrawal rejected','info');
+    renderAdminWithdrawals();
+  }
+}
+
+function renderAdminPayments(){
+  const users=getUsers().filter(u=>u.id!=='__admin__');
+  const activated=users.filter(u=>u.activated);
+  document.getElementById('admin-tab-payments').innerHTML=`
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:16px">Account Activations (${activated.length})</div>
+      <table class="admin-table">
+        <thead><tr><th>User</th><th>Email</th><th>Phone</th><th>Activated</th><th>Amount</th></tr></thead>
+        <tbody>${activated.map(u=>`
+          <tr>
+            <td><div style="font-weight:600">${u.name}</div></td>
+            <td style="color:var(--muted)">${u.email}</td>
+            <td>${u.phone||'—'}</td>
+            <td style="color:var(--muted);font-size:.82rem">${u.activatedAt?new Date(u.activatedAt).toLocaleString():'—'}</td>
+            <td style="color:var(--accent3);font-weight:700">Ksh 225</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════
+function copyRef(){
+  const user=currentUser();
+  if(!user) return;
+  const url=`${window.location.origin}${window.location.pathname}?ref=${user.refCode}`;
+  navigator.clipboard.writeText(url).then(()=>toast('Referral link copied! 📋','success')).catch(()=>{
+    const inp=document.createElement('input');
+    inp.value=url; document.body.appendChild(inp); inp.select(); document.execCommand('copy'); inp.remove();
+    toast('Referral link copied!','success');
+  });
+}
+function shareWhatsApp(){
+  const user=currentUser();
+  if(!user) return;
+  const url=`${window.location.origin}${window.location.pathname}?ref=${user.refCode}`;
+  const msg=encodeURIComponent(`Hey! Join Quantix and earn Ksh 100+ daily by completing simple tasks! Sign up using my link: ${url}`);
+  window.open(`https://wa.me/?text=${msg}`,'_blank');
+}
+function timeAgo(date){
+  const diff=Date.now()-new Date(date).getTime();
+  const m=Math.floor(diff/60000);
+  if(m<1) return 'Just now';
+  if(m<60) return m+'m ago';
+  const h=Math.floor(m/60);
+  if(h<24) return h+'h ago';
+  return Math.floor(h/24)+'d ago';
+}
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlayMask').classList.toggle('visible');
+}
+function closeSidebar(){
+  document.getElementById('sidebar')?.classList.remove('open');
+  document.getElementById('overlayMask')?.classList.remove('visible');
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded',()=>{
+  // Create default admin user if not exists
+  let admUser=getUser('__admin__');
+  if(!admUser){ admUser={id:'__admin__',name:'Admin',email:ADMIN_EMAIL,pass:ADMIN_PASS,activated:true,balance:0,totalEarned:0,refCode:'ADMIN',referrals:[],tasksToday:{},joinedAt:new Date().toISOString(),notifications:[],earnings:[]}; saveUser(admUser); }
+  // Check ref in URL
+  const ref=new URLSearchParams(window.location.search).get('ref');
+  if(ref) localStorage.setItem('qx_pending_ref',ref);
+  checkSession();
+});
+</script>
+</body>
+</html>
